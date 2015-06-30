@@ -1,0 +1,27 @@
+{
+  "name": "webrtc2icecast",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+     "binaryjs": "latest",
+      "express": "latest",
+      "jade": "latest",
+      "fluent-ffmpeg": "latest",
+      "nodeshout":"latest"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lresc/webrtc2icacast"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lresc/webrtc2icacast/issues"
+  },
+  "homepage": "https://github.com/lresc/webrtc2icacast"
+}
