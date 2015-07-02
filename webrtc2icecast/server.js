@@ -19,7 +19,8 @@ var nodeshout = require("nodeshout");
         source.write("stream_mp3");
     }
 });*/
-
+var chunk2icecast;
+var canSend = true;
 var port = 3700;
 var app = express();
 app.set('views', __dirname + '/tpl');
@@ -47,11 +48,8 @@ shout.open();
 var stream_mp3 = new Buffer(40960);
 var esta_transmitiendo = false;
 // not yet implemented...
-//ve.addComment('ARTIST', 'Bob Marley');
 
 
-//var com = ffmpeg().input("/home/lara/Escritorio/f/arow32.pcm").inputFormat("u32le").audioChannels(2).format("mp3").output("/home/lara/Escritorio/f/app.mp3").run();
-console.log("ffmepg" );
 
 
 
@@ -67,26 +65,61 @@ console.log(" conectarse a : localhost:3700");
 binaryServer.on('connection', function(client) {
   console.log("new connection");
 
-  var out = "/home/lara/Escritorio/git/node-webrtc/browser-pcm-stream/salida.ogg";
-  var file  = fs.createWriteStream('/home/lara/Escritorio/git/node-webrtc/browser-pcm-stream/salida.mp3');
+  var out = "/home/lara/Escritorio/git/Mozilla-Student-Projects/salida.mp3";
+ // var file  = fs.createWriteStream('/home/lara/Escritorio/git/node-webrtc/browser-pcm-stream/salida.mp3');
  
   client.on('stream', function(stream, meta) {
-   stream.on('data', function(data) {
-      // console.log("stream mp3 es: " + stream_mp3[3] + stream_mp3[7]+stream_mp3[17]);
-       esta_transmitiendo = true;
-          while (esta_transmitiendo) {
-                buffer= stream_mp3.slice(0, chunkSize-1);
-                var buffer2 = new Buffer(4096);
-                stream_mp3 = Buffer.concat([stream_mp3.slice(chunkSize, chunkSize.length-1), buffer2]);
-                console.log("buffer es: " + buffer[2]);
-                shout.send(buffer, chunkSize);
+
+  console.log("stream "+ stream.length);
+  //var com = ffmpeg().input(stream).inputFormat("s16le").inputFPS(48.0).audioChannels(1).format("mp3").pipe(chunk,{end:false});
+  // siendo out un archivo mp3 esto funciona:
+  //var com = ffmpeg().input(stream).inputFormat("s16le").inputFPS(48.0).audioChannels(1).format("mp3").output(out).run();
+  var com = ffmpeg().input(stream).inputFormat("s16le").inputFPS(48.0).audioChannels(1).format("mp3");
+  var ffstream = com.pipe();
+
+ /* ffstream.on('data', function(chunk) {
+    // chunk2icecast += chunk;
+    // var chunk2icecast_size = 4096;
+
+     console.log('chunk2icecast ' + chunk.length + ' bytes');
+     
+      if(canSend){
+         canSend = false;
+         shout.send(chunk, chunk.length);
+     console.log('fsend ' + chunk.length + ' bytes');
+
+         var delay = shout.delay();
+         setTimeout( function(){
+          canSend = true;
+//           chunk2icecast = chunk;
+       },delay);
+       }
+      //console.log("tiempo de espera" + delay);
+
+     
+    // var chunk2icecast += chunk;
+    // var chunk2icecast_size = 4096;
+  });*/
+
+//GOOD
+  ffstream.on('data', function(chunk) {
+    //chunk2icecast += chunk;
+     console.log('ffmpeg just wrote ' + chunk.length + ' bytes');
+     // sync, hace que se duerma el proceso hasta que pueda 
+     shout.sync();
+     shout.send(chunk, chunk.length);
+      //var delay = shout.delay();
+    //  console.log("tiempo de espera" + delay);
+    // var chunk2icecast += chunk;
+    // var chunk2icecast_size = 4096;
+  });
+
+
+ // console.log("chunk.lenght = " +chunk.length);
+
+    //shout.send(chunk, chunk.length);
             
-                shout.sync();
-        }
-
-      });
-
-  var com = ffmpeg().input(stream).inputFormat("s16le").inputFPS(48.0).audioChannels(1).format("mp3").pipe(stream_mp3,{end:false});
+  // shout.sync();
 
 
   
@@ -105,16 +138,16 @@ binaryServer.on('connection', function(client) {
     }*/
 
  
-        var chunkSize = 4096,
+       /* var chunkSize = 4096,
             buffer = new Buffer(chunkSize);
 
               while (esta_transmitiendo) {
                 buffer= stream_mp3.slice(0, chunkSize-1);
-                console.log("buffer es: " + buffer);
+              //  console.log("buffer es: " + buffer);
                 shout.send(buffer, chunkSize);
             
                 shout.sync();
-        }
+        }*/
 
       
  
@@ -140,6 +173,7 @@ binaryServer.on('connection', function(client) {
     stream.on('end', function() {
       console.log("end of stream");
       shout.close();
+  //  });
     });
     });
 });
