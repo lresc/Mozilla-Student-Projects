@@ -16,14 +16,16 @@
 
     var recording = false;
 
-    window.startRecording = function() {
+   $("#buttonStart").click(function(){
       recording = true;
-    }
+    });
 
-    window.stopRecording = function() {
-      recording = false;
+   $("#buttonStop").click(function(){
+       recording = false;
       window.Stream.end();
-    }
+    });
+
+    
 
     function success(e) {
       audioContext = window.AudioContext || window.webkitAudioContext;

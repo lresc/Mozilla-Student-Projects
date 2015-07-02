@@ -17,21 +17,23 @@ var nodeshout = require("nodeshout");
   shout.setAudioInfo('samplerate', '44100');
   shout.setAudioInfo('channels', '1');
 
-  shout.open();
+  var openvar = shout.open();
+
+  console.log("openvar : " + openvar);
 
 
 
-  //Init server listener
+  //Init server listenner
   
   var port = 3700;
   var app = express();
-  app.set('views', __dirname + '/tpl');
-  app.set('view engine', "jade");
-  app.engine('jade', require('jade').__express);
+  app.set('views', __dirname + '/public');
+  //app.set('view engine', "jade");
+  //app.engine('jade', require('jade').__express);
   app.use(express.static(__dirname + '/public'))
 
   app.get("/", function(req, res){
-    res.render("index");
+    res.sendFile(__dirname +"/public/index.html");
   });
 
   app.listen(port);
@@ -42,8 +44,6 @@ var nodeshout = require("nodeshout");
   binaryServer.on('connection', function(client) {
     console.log("new connection");
 
-
- 
     client.on('stream', function(stream, meta) {
   
         var com = ffmpeg().input(stream).inputFormat("s16le").inputFPS(48.0).audioChannels(1).format("mp3");

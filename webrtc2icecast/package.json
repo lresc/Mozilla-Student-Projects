@@ -6,7 +6,6 @@
   "dependencies": {
      "binaryjs": "latest",
       "express": "latest",
-      "jade": "latest",
       "fluent-ffmpeg": "latest",
       "nodeshout":"latest"
   },
@@ -16,12 +15,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lresc/webrtc2icacast"
+    "url": "https://github.com/lresc/Mozilla-Student-Projects"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/lresc/webrtc2icacast/issues"
+    "url": "https://github.com/lresc/Mozilla-Student-Projects/issues"
   },
-  "homepage": "https://github.com/lresc/webrtc2icacast"
+  "homepage": "https://github.com/lresc/Mozilla-Student-Projects"
 }
