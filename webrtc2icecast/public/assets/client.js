@@ -1,5 +1,6 @@
 (function(window) {
   var client = new BinaryClient('ws://localhost:9001');
+       $("").show();
 
   client.on('open', function() {
     window.Stream = client.createStream();
@@ -18,11 +19,14 @@
 
    $("#buttonStart").click(function(){
       recording = true;
+       $("#buttonStart").hide();
+       $("#buttonStop").show();
     });
 
    $("#buttonStop").click(function(){
        recording = false;
       window.Stream.end();
+      window.location.href = "http://localhost:3700";
     });
 
     

@@ -1,0 +1,25 @@
+body{
+	font-family: Verdana;
+    margin: 4%;
+}
+
+#icecast_config div{
+	width: 100%;
+}
+
+#icecast_config label{
+	min-width: 150px;
+	float: left;
+}
+
+.div_texto{
+	margin-bottom:3%;
+}
+
+#buttonConnect{
+	margin-top:2%;
+	margin-left: 15%;
+}
+#buttonStop{
+	display: none;
+}

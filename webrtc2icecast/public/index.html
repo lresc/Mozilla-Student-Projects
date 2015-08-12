@@ -1,11 +1,30 @@
+<!doctype html>
 <html>
-<head>
-<script src="http://cdn.binaryjs.com/0/binary.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-</head>
-<body>
-<input type=button id="buttonStart" value="Start Transmiting"></input>
-<input type=button id="buttonStop" value="Stop"></input>
-<script src="client.js"></script>
-</body>
+	<head>
+		<link href="assets/style.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+		<div class="div_texto">
+			Insert the connection data of the Icecast server in which you want transmit:
+		</div>
+
+		<form id="icecast_config" action='/' method='post'>
+			<div>
+				<label> Server</label> <input type="text" name="server"></input>
+			</div>
+			<div>
+				<label> Port</label><input type="text" name="port"></input>
+			</div>
+			<div>
+				<label> User</label> <input type="text" name="user"></input>
+			</div>
+			<div>
+				<label> Password</label><input type="text" name="userpass"></input>
+			</div>
+			<div>
+				<label> Mount name</label> <input type="text" name="mountName"></input>
+			</div>
+			<input type="submit" id="buttonConnect" value="Connect to icecast"></input>
+		</form>
+	</body>
 </html>
